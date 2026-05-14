@@ -1,23 +1,49 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { DashboardComponent } from './dashboard';
+import { of } from 'rxjs';
 
-import { Dashboard } from './dashboard';
+declare const vi: any;
 
-describe('Dashboard', () => {
-  let component: Dashboard;
-  let fixture: ComponentFixture<Dashboard>;
+class MockUsuarioService {
+  buscarUsuarios() { 
+    return of<any[]>([{ nome: 'Vazio' }]);
+  }
+}
+
+describe('DashboardComponent', () => {
+  let component: DashboardComponent;
+  let fixture: ComponentFixture<DashboardComponent>;
+  let mockService: MockUsuarioService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Dashboard]
+      imports: [DashboardComponent],
+      providers: [
+        { provide: MockUsuarioService, useClass: MockUsuarioService }
+      ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Dashboard);
+    fixture = TestBed.createComponent(DashboardComponent);
     component = fixture.componentInstance;
-    await fixture.whenStable();
+
+    mockService = TestBed.inject(MockUsuarioService);
+
+    fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('deve buscar os usuários via serviço', () => {
+    // Arrange (Preparar)
+    vi.spyOn(mockService, 'buscarUsuarios').mockReturnValue(of([{ nome: 'Jovi' }]));
+
+    // Act (Agir)
+    const resultado$ = mockService.buscarUsuarios();
+
+    // Assert (Validar)
+    expect(mockService.buscarUsuarios).toHaveBeenCalled();
+    resultado$.subscribe(usuarios => {
+      expect(usuarios.length).toBe(1);
+      expect(usuarios[0].nome).toBe('Jovi');
+    });
   });
 });

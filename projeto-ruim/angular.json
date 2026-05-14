@@ -23,6 +23,11 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "**/*.{svg,png}",
+                "input": "src/app/icones",
+                "output": "icones"
               }
             ],
             "styles": [

@@ -13,7 +13,7 @@
     <main class="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-5">
       
       <section class="bg-white/95 p-5 rounded-xl shadow-2xl border border-white/20 flex flex-col h-[750px]">
-        <h3 class="text-lg font-bold text-slate-800 mb-3 shrink-0 text-center">⏱️ Bate-Ponto Ao Vivo</h3>
+        <h3 class="text-lg font-bold text-slate-800 mb-3 shrink-0 text-center">Bate-Ponto Ao Vivo</h3>
         <div class="overflow-y-auto flex-1 pr-2">
           <ul class="flex flex-col">
             <li *ngFor="let evento of eventosAoVivo" 
@@ -27,13 +27,13 @@
       <div class="flex flex-col gap-5">
         
         <section class="bg-white/95 p-5 rounded-xl shadow-2xl border border-white/20">
-          <h3 class="text-lg font-bold text-slate-800">👥 Quadro de Colaboradores (5.000 registros)</h3>
+          <h3 class="text-lg font-bold text-slate-800">Quadro de Colaboradores (5.000 registros)</h3>
 
           <div class="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4 mt-5 h-[450px] overflow-y-auto pr-2">
             <div class="flex items-center gap-4 p-4 border border-slate-100 rounded-xl bg-white shadow-sm" 
                  *ngFor="let colab of colaboradores">
               
-              <img src="https://picsum.photos/1000/1000?random={{colab.id}}" alt="Avatar" class="w-12 h-12 rounded-full shrink-0 shadow-sm object-cover">
+              <img src="icones/{{ colab.icone }}" alt="Avatar" class="w-12 h-12 rounded-full shrink-0 shadow-sm object-cover bg-slate-100 p-2">
 
               <div>
                 <h4 class="font-bold text-slate-700 m-0 mb-1 leading-tight">{{ colab.nome }}</h4>
@@ -45,7 +45,7 @@
         </section>
 
         <section class="bg-white/95 p-5 rounded-xl shadow-2xl border border-white/20">
-          <h3 class="text-lg font-bold text-slate-800 mb-6">📊 Distribuição Salarial</h3>
+          <h3 class="text-lg font-bold text-slate-800 mb-6">Distribuição Salarial</h3>
           <div class="flex items-end gap-6 h-48 w-full">
             <div *ngFor="let faixa of histograma" class="flex-1 flex flex-col items-center justify-end h-full">
               <span class="text-sm font-bold text-slate-600 mb-2">{{ faixa.count }} funcionários</span>

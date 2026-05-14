@@ -49,15 +49,22 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+    const iconesDisponiveis = [
+      'bi-backpack', 'bi-binoculars', 'bi-box-seam', 'bi-brush', 'bi-bug',
+      'bi-cloud-fog2', 'bi-dice-3', 'bi-emoji-smile', 'bi-flask', 'bi-plug'
+    ];
+
     const hoje = new Date().getFullYear();
     const novaLista = [];
     for (let i = 1; i <= 5000; i++) {
+      const iconeAleatorio = iconesDisponiveis[Math.floor(Math.random() * iconesDisponiveis.length)];
       novaLista.push({
         id: i,
         nome: `Colaborador ${i}`,
         departamento: i % 2 === 0 ? 'Tecnologia' : 'Gente e Gestão',
         salario: Math.floor(Math.random() * 15000) + 2000,
-        anosEmpresa: hoje - (2015 + (i % 10))
+        anosEmpresa: hoje - (2015 + (i % 10)),
+        icone: iconeAleatorio
       });
     }
     this.colaboradoresBase.set(novaLista);

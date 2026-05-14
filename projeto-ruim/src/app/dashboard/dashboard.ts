@@ -25,8 +25,14 @@ export class DashboardComponent implements OnInit {
   gerarLista() {
     const hoje = new Date().getFullYear();
     
+    const iconesDisponiveis = [
+      'backpack.svg', 'binoculars.svg', 'box-seam.svg', 'brush.svg', 'bug.svg',
+      'cloud-fog2.svg', 'dice-3.svg', 'emoji-smile.svg', 'flask.svg', 'plug.svg'
+    ];
+
     // Subimos a barra para 5.000 para asfixiar o Virtual DOM do Angular
     for (let i = 1; i <= 5000; i++) {
+      const iconeAleatorio = iconesDisponiveis[Math.floor(Math.random() * iconesDisponiveis.length)];
       const anoContratacao = 2015 + (i % 10);
       const salarioAleatorio = Math.floor(Math.random() * 15000) + 2000;
 
@@ -35,7 +41,8 @@ export class DashboardComponent implements OnInit {
         nome: `Colaborador ${i}`,
         departamento: i % 2 === 0 ? 'Tecnologia' : 'Gente e Gestão',
         salario: salarioAleatorio,
-        anosEmpresa: hoje - anoContratacao 
+        anosEmpresa: hoje - anoContratacao,
+        icone: iconeAleatorio
       });
     }
   }

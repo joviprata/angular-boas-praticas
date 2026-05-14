@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, computed, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, signal, computed, ChangeDetectionStrategy, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { interval } from 'rxjs';
@@ -14,13 +14,27 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class DashboardComponent implements OnInit {
   colaboradoresBase = signal<any[]>([]);
   eventosAoVivo = signal<string[]>([]);
+  chunkSize = signal<number>(this.calculateChunkSize());
 
-  // Agrupamento em linhas de 3 para o Virtual Scroll ser compatível com Grid
+  calculateChunkSize() {
+    if (typeof window === 'undefined') return 5;
+    const isSidebarVisible = window.innerWidth >= 1024;
+    const availableWidth = window.innerWidth - (isSidebarVisible ? 300 : 0) - 40 - 16;
+    return Math.max(1, Math.floor(availableWidth / (250 + 16)));
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    this.chunkSize.set(this.calculateChunkSize());
+  }
+
+  // Agrupamento adaptativo para o Virtual Scroll ser perfeitamente visualmente alinhado ao CSS Grid do projeto-ruim
   colaboradoresAgrupados = computed(() => {
     const lista = this.colaboradoresBase();
     const linhas = [];
-    for (let i = 0; i < lista.length; i += 3) {
-      linhas.push(lista.slice(i, i + 3));
+    const size = this.chunkSize();
+    for (let i = 0; i < lista.length; i += size) {
+      linhas.push(lista.slice(i, i + size));
     }
     return linhas;
   });

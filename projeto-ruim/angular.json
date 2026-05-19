@@ -26,7 +26,7 @@
               },
               {
                 "glob": "**/*.{svg,png}",
-                "input": "src/app/icones",
+                "input": "src/app/aplicativo/coisas/icones/imgs/svgs",
                 "output": "icones"
               }
             ],
